@@ -1,5 +1,6 @@
 package com.felix.lazylist;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -16,14 +17,14 @@ import com.felix.imageloader.ImageLoader;
  */
 public class LazyAdapter extends BaseAdapter {
 
-    private String[] data;
-    private LayoutInflater inflater;
+    private final String[] data;
+    private final LayoutInflater inflater;
     public ImageLoader imageLoader;
 
     LazyAdapter(Activity activity, String[] data) {
         this.data = data;
         this.inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        //这里使用applicationcontent,防止内存泄漏
+        //这里使用Application Context,防止内存泄漏
         this.imageLoader = new ImageLoader(activity.getApplicationContext());
     }
 
@@ -42,13 +43,13 @@ public class LazyAdapter extends BaseAdapter {
         return position;
     }
 
+    @SuppressLint({"InflateParams", "SetTextI18n"})
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View vi = convertView;
         if (convertView == null) {
             vi = inflater.inflate(R.layout.item, null);
         }
-
         TextView text = vi.findViewById(R.id.text);
         ImageView image = vi.findViewById(R.id.image);
         text.setText("item " + position);

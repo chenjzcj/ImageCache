@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * @author Administrator
+ * @author felix.zhong
  * 内存缓存
  */
 public class MemoryCache {
@@ -21,7 +21,7 @@ public class MemoryCache {
      * LinkedHashMap构造方法的最后一个参数true代表这个map里的元素将按照最近使用次数由少到多排列，即LRU
      * 这样的好处是如果要将缓存中的元素替换，则先遍历出最近最少使用的元素来替换以提高效率
      */
-    private Map<String, Bitmap> cache = Collections.synchronizedMap(
+    private final Map<String, Bitmap> cache = Collections.synchronizedMap(
             //Last argument true for LRU ordering
             new LinkedHashMap<String, Bitmap>(10, 1.5f, true));
     /**

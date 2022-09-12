@@ -32,7 +32,7 @@ public class FileCache {
             cacheDir = context.getCacheDir();
         }
         if (!cacheDir.exists()) {
-            cacheDir.mkdirs();
+            boolean mkdirs = cacheDir.mkdirs();
         }
     }
 

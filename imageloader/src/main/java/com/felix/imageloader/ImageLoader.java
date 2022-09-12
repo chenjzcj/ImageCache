@@ -11,7 +11,6 @@ import com.felix.imageloader.cache.MemoryCache;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,22 +28,22 @@ import java.util.concurrent.Executors;
  */
 public class ImageLoader {
 
-    private MemoryCache memoryCache;
-    private FileCache fileCache;
+    private final MemoryCache memoryCache;
+    private final FileCache fileCache;
     /**
      * 使用线程池去加载图片
      */
-    private ExecutorService executorService;
+    private final ExecutorService executorService;
 
     /**
      * 虚引用,用来存放ImageView对象
      */
-    private Map<ImageView, String> imageViews = Collections.synchronizedMap(new WeakHashMap<ImageView, String>());
+    private final Map<ImageView, String> imageViews = Collections.synchronizedMap(new WeakHashMap<ImageView, String>());
 
     /**
      * handler to display images in UI thread
      */
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler();
 
     public ImageLoader(Context context) {
         memoryCache = new MemoryCache();
@@ -156,8 +155,6 @@ public class ImageLoader {
             stream2.close();
 
             return bitmap;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -167,7 +164,7 @@ public class ImageLoader {
     /**
      * Task for the queue
      */
-    private class PhotoToLoad {
+    private static class PhotoToLoad {
         public String url;
         public ImageView imageView;
 
@@ -243,5 +240,4 @@ public class ImageLoader {
         memoryCache.clear();
         fileCache.clear();
     }
-
 }
